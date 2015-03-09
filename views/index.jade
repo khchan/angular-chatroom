@@ -3,11 +3,11 @@ extends layout
 block body
   div#content(layout='row' ng-controller='AppCtrl' layout-margin layout-fill)
     
-    div#videopanel(flex='50')
-      h3 Video
-      | This is the video
+    //- div#videopanel(flex='50')
+    //-   h3 Video
+    //-   | This is the video
 
-    div#chatpanel(flex='25')
+    div#chatpanel(flex='75')
       h3 Messages
       md-content.overflowable(scroll-glue)
         md-list
