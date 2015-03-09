@@ -1,0 +1,83 @@
+/* app css stylesheet */
+
+/*------------- Reset browser differences ------------- */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* ------------ Body styles ------------ */
+html, body {
+  background-color: #f0f1f3;
+  color:#667073;
+  font: 16px/1.3 'Arial',sans-serif;
+}
+
+#content, html, body {
+  height: 98%;
+}
+
+#videopanel {
+  background-color: black;
+}
+
+#chatpanel {
+  height: 88%;
+}
+
+#optionpanel {
+  position: relative;
+}
+
+.md-tile-content {
+  padding: 0px;
+}
+
+md-card {
+  background-color: white;
+}
+
+md-card.md-default-theme md-card-content {
+  display: inline-block;
+  padding: 10px 16px 5px 16px;
+}
+
+md-item-content .md-tile-content {
+  padding: 0px;
+}
+
+md-item-content .md-tile-content p {
+  word-wrap: break-word;
+}
+
+.alignright {
+  text-align: right;
+}
+
+.face {
+  width: 35px;
+  margin: 0px 16px 0px 16px;
+}
+
+.overflowable {
+  height: 100%;
+  overflow-x: hidden; 
+  word-wrap: break-word;
+  overflow-y: auto;
+  border: 1px solid #000;
+}
+
+.overflowable p {
+  margin: 0;
+}
+
+.col {
+  float: left;
+  width: 350px;
+}
+
+.clr {
+  width: 100%;
+  position:absolute;
+  bottom:0;
+}
