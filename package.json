@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install"
-  }
+  },
   "dependencies": {
     "express": "2.5.10",
     "jade": ">= 0.26.1",
