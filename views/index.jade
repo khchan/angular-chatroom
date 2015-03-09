@@ -7,7 +7,7 @@ block body
     //-   h3 Video
     //-   | This is the video
 
-    div#chatpanel(flex='75')
+    div#chatpanel(flex='66', flex-sm='50')
       h3 Messages
       md-content.overflowable(scroll-glue)
         md-list
@@ -37,12 +37,11 @@ block body
             | Your current user name is {{name}}
           input(ng-model='newName', placeholder='New Name')
 
-      .clr
-        form(ng-submit='sendMessage()')
-          md-input-container
-            label
-              | Say something
-            input(ng-model='message', placeholder='Hello World!')
+      form(ng-submit='sendMessage()')
+        md-input-container
+          label
+            | Say something
+          input(ng-model='message', placeholder='Hello World!')
 
   script(src='bower_components/angular/angular.js')
   script(src='bower_components/angular-animate/angular-animate.js')

@@ -26,7 +26,7 @@ html, body {
 }
 
 #optionpanel {
-  position: relative;
+  /*position: relative;*/
 }
 
 .md-tile-content {
@@ -65,19 +65,4 @@ md-item-content .md-tile-content p {
   word-wrap: break-word;
   overflow-y: auto;
   border: 1px solid #000;
-}
-
-.overflowable p {
-  margin: 0;
-}
-
-.col {
-  float: left;
-  width: 350px;
-}
-
-.clr {
-  width: 100%;
-  position:absolute;
-  bottom:0;
 }
