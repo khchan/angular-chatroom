@@ -24,7 +24,7 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
       user: 'chatroom',
       text: 'User ' + data.name + ' has joined.'
     });
-    $scope.users.push(data.name);
+    $scope.users.push({user: data.name, colour: $scope.getUserColour(data.name)});
   });
 
   // add a message to the conversation when a user disconnects or leaves the room
@@ -36,7 +36,7 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
     var i, user;
     for (i = 0; i < $scope.users.length; i++) {
       user = $scope.users[i];
-      if (user === data.name) {
+      if (user.user === data.name) {
         $scope.users.splice(i, 1);
         break;
       }
@@ -50,8 +50,8 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
     // rename user in list of users
     var i;
     for (i = 0; i < $scope.users.length; i++) {
-      if ($scope.users[i] === oldName) {
-        $scope.users[i] = newName;
+      if ($scope.users[i].user === oldName) {
+        $scope.users[i].user = newName;
       }
     }
 
@@ -59,10 +59,28 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
       user: 'chatroom',
       text: 'User ' + oldName + ' is now known as ' + newName + '.'
     });
-  }
+  };
+
+  $scope.getUserColour = function(username) {
+    var i;
+    for (i=0; i < $scope.users.length; i++) {
+      if ($scope.users[i].user == username) {
+        return $scope.users[i].colour;
+      }
+    }
+  };
 
   // Methods published to the scope
   // ==============================
+  
+  $scope.keyPress = function(event) {
+    if (event.keyCode === 13) { // enter key
+      event.preventDefault();
+      $scope.sendMessage();
+    } else if (event.keyCode === 10) { // ctrl enter
+      $scope.message += '\n';
+    }
+  };
 
   $scope.toggleLeft = function() {
     $mdSidenav('right').toggle();
@@ -74,8 +92,7 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
     }, function (result) {
       if (!result) {
         alert('There was an error changing your name');
-      } else {
-        
+      } else {        
         changeName($scope.name, $scope.newName);
 
         $scope.name = $scope.newName;
@@ -87,18 +104,21 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
   $scope.messages = [];
 
   $scope.sendMessage = function () {
-    socket.emit('send:message', {
-      message: $scope.message
-    });
+    if ($scope.message) {
+      socket.emit('send:message', {
+        message: $scope.message
+      });
 
-    // add the message to our model locally
-    $scope.messages.push({
-      user: $scope.name,
-      text: $scope.message,
-      time: new Date()
-    });
+      // add the message to our model locally
+      $scope.messages.push({
+        user: $scope.name,
+        colour: $scope.getUserColour($scope.name),
+        text: $scope.message,
+        time: new Date()
+      });
 
-    // clear message box
-    $scope.message = '';
+      // clear message box
+      $scope.message = '';
+    }
   };
 });

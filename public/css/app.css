@@ -31,6 +31,10 @@ html, body {
   height: 88%;
 }
 
+#optionpanel {
+  background-color: #f0f1f3;
+}
+
 .md-tile-content {
   padding: 0px;
 }
@@ -57,7 +61,7 @@ md-item-content .md-tile-content p {
 }
 
 .face {
-  width: 35px;
+  width: 40px;
   /*margin: 0px 16px 0px 16px;*/
 }
 
@@ -70,6 +74,10 @@ md-item-content .md-tile-content p {
 }
 
 /* Utils */
+
+.angular-newlines {
+  white-space: pre-wrap;
+}
 
 .menuBtn {
   background-color: transparent;
