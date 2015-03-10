@@ -1,7 +1,11 @@
 'use strict';
 
 /* Controllers */
-app.controller('AppCtrl', function($scope, socket) {
+app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
+  
+  $scope.toggleLeft = function() {
+    $mdSidenav('right').toggle();
+  };
 
   // Socket listeners
   // ================

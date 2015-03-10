@@ -1,15 +1,16 @@
 extends layout
 
 block body
-  div#content(layout='row' ng-controller='AppCtrl' layout-margin layout-fill)
-    
-    //- div#videopanel(flex='50')
-    //-   h3 Video
-    //-   | This is the video
+  div#content(ng-controller='AppCtrl', layout='column' layout-margin layout-fill)
 
-    div#chatpanel(flex='66', flex-sm='50')
-      h3 Messages
-      md-content.overflowable(scroll-glue)
+    md-toolbar(layout='row')
+      button.menuBtn(ng-click='toggleLeft()', hide-gt-md)
+        span.visuallyhidden
+          | Menu
+      h1 angular-chatroom
+
+    section(layout='row', flex)
+      md-content.md-padding(flex, scroll-glue)      
         md-list
           md-item(ng-repeat='message in messages')
             p(ng-if='message.user === "chatroom"')
@@ -20,28 +21,35 @@ block body
               .md-tile-content
                 md-card
                   md-card-content(ng-class='{alignright: message.user === name}')
-                    h4
+                    h3
                       | {{message.user}}
-                    p
+                    h4
                       | {{message.text}}
               .md-tile-right(ng-if='message.user === name')
                   img(ng-src='img/unnamed.jpg' class='face')
                   
-    div#optionpanel(flex)
-      h3 Users  
-      p(ng-repeat='user in users') {{user}}
+        div#optionpanel(flex)
+          form(ng-submit='sendMessage()')
+            md-input-container
+              label
+                | Say something
+              input(ng-model='message', placeholder='Hello World!')
 
-      form(ng-submit='changeName()')
-        md-input-container
-          label
-            | Your current user name is {{name}}
-          input(ng-model='newName', placeholder='New Name')
+      md-sidenav.md-sidenav-right.md-whiteframe-z2(md-component-id='right', md-is-locked-open="$mdMedia('gt-md')")
+        md-content.md-padding
+          md-list
+            md-item(ng-repeat='user in users')
+              md-item-content
+                .md-tile-left
+                    img(ng-src='img/unnamed.jpg' class='face')
+                .md-tile-content
+                    h4 &nbsp;{{user}}
 
-      form(ng-submit='sendMessage()')
-        md-input-container
-          label
-            | Say something
-          input(ng-model='message', placeholder='Hello World!')
+          form(ng-submit='changeName()')
+            md-input-container
+              label
+                | Your current user name is {{name}}
+              input(ng-model='newName', placeholder='New Name')
 
   script(src='bower_components/angular/angular.js')
   script(src='bower_components/angular-animate/angular-animate.js')
