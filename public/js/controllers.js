@@ -2,10 +2,6 @@
 
 /* Controllers */
 app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
-  
-  $scope.toggleLeft = function() {
-    $mdSidenav('right').toggle();
-  };
 
   // Socket listeners
   // ================
@@ -68,6 +64,10 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
   // Methods published to the scope
   // ==============================
 
+  $scope.toggleLeft = function() {
+    $mdSidenav('right').toggle();
+  };
+
   $scope.changeName = function () {
     socket.emit('change:name', {
       name: $scope.newName
@@ -94,7 +94,8 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
     // add the message to our model locally
     $scope.messages.push({
       user: $scope.name,
-      text: $scope.message
+      text: $scope.message,
+      time: new Date()
     });
 
     // clear message box

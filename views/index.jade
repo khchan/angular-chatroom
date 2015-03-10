@@ -1,7 +1,8 @@
 extends layout
 
 block body
-  div#content(ng-controller='AppCtrl', layout='column' layout-margin layout-fill)
+
+  div#content(ng-controller='AppCtrl', layout='column', layout-margin, layout-fill, ng-cloak)
 
     md-toolbar(layout='row')
       button.menuBtn(ng-click='toggleLeft()', hide-gt-md)
@@ -10,7 +11,7 @@ block body
       h1 angular-chatroom
 
     section(layout='row', flex)
-      md-content.md-padding(flex, scroll-glue)      
+      md-content.md-padding(flex, scroll-glue)
         md-list
           md-item(ng-repeat='message in messages')
             p(ng-if='message.user === "chatroom"')
@@ -25,6 +26,7 @@ block body
                       | {{message.user}}
                     h4
                       | {{message.text}}
+                    span.timesent(am-time-ago='message.time')
               .md-tile-right(ng-if='message.user === name')
                   img(ng-src='img/unnamed.jpg' class='face')
                   
@@ -36,6 +38,8 @@ block body
               input(ng-model='message', placeholder='Hello World!')
 
       md-sidenav.md-sidenav-right.md-whiteframe-z2(md-component-id='right', md-is-locked-open="$mdMedia('gt-md')")
+        md-toolbar.md-theme-blue
+          h1.md-toolbar-tools Users
         md-content.md-padding
           md-list
             md-item(ng-repeat='user in users')
@@ -51,10 +55,11 @@ block body
                 | Your current user name is {{name}}
               input(ng-model='newName', placeholder='New Name')
 
-  script(src='bower_components/angular/angular.js')
-  script(src='bower_components/angular-animate/angular-animate.js')
-  script(src='bower_components/angular-aria/angular-aria.js')
-  script(src='bower_components/angular-material/angular-material.js')
+  script(src='bower_components/moment/moment.js')
+  script(src='bower_components/angular-moment/angular-moment.js')
+  script(src='bower_components/angular-animate/angular-animate.min.js')
+  script(src='bower_components/angular-aria/angular-aria.min.js')
+  script(src='bower_components/angular-material/angular-material.min.js')
   script(src='bower_components/angular-scroll-glue/src/scrollglue.js')
   script(src='/socket.io/socket.io.js')
   script(src='js/app.js')

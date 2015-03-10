@@ -6,10 +6,10 @@ html(ng-app="myApp")
     meta(name='description', content='')
     meta(name='viewport', content='initial-scale=1, maximum-scale=1, user-scalable=no')
     base(href='/')
-    title Angular Socket.io IM Demo App
+    title Angular Socket.io Chatroom
     link(rel='stylesheet', href='/css/app.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans Condensed:300italic,300,700', rel='stylesheet', type='text/css')
-    link(rel='stylesheet', href='bower_components/bootstrap/dist/bootstrap.min.css')    
     link(rel='stylesheet', href='bower_components/angular-material/angular-material.css')    
-  body
+    script(src='bower_components/angular/angular.min.js')
+  body(ng-cloak)
     block body
