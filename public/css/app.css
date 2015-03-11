@@ -73,6 +73,18 @@ md-item-content .md-tile-content p {
   border: 1px solid #000;
 }
 
+video {
+  width: 100%    !important;
+  height: auto   !important;
+}
+
+.video-wrapper:after {
+  content: ' ';
+  clear: both;
+  display: block;
+}
+
+
 /* Utils */
 
 .angular-newlines {

@@ -10,10 +10,9 @@ var express = require('express'),
 var app = module.exports = express.createServer();
 
 // Hook Socket.io into Express
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(app, { log: false });
 
 // Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -35,7 +34,6 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
 
@@ -43,7 +41,6 @@ app.get('/partials/:name', routes.partials);
 app.get('*', routes.index);
 
 // Socket.io Communication
-
 io.sockets.on('connection', socket);
 
 // Start server

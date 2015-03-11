@@ -10,6 +10,7 @@
     "jade": ">= 0.26.1",
     "socket.io": ">= 0.9.6",
     "bower": "~1.3.12",
-    "randomcolor": "~0.2.0"
+    "randomcolor": "~0.2.0",
+    "node-uuid": "~1.4.3"
   }
 }

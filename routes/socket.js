@@ -1,4 +1,7 @@
-var randomColor = require('randomcolor');
+var randomColor = require('randomcolor'),
+    uuid = require('node-uuid'),
+    rooms = {},
+    userIds = {};
 
 // Keep track of which names are used so that there are no duplicates
 var userNames = (function () {
@@ -73,6 +76,10 @@ var userNames = (function () {
 
 // export function for listening to the socket
 module.exports = function (socket) {
+  
+  // Chat Related Socket Handers
+  // ===============================
+
   var name = userNames.getGuestName();
 
   // send the new user their name and a list of users
@@ -120,5 +127,55 @@ module.exports = function (socket) {
       name: name
     });
     userNames.free(name);
+
+    // remove user from room and broadcast
+    if (!currentRoom || !rooms[currentRoom]) {
+      return;
+    }
+    delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
+    rooms[currentRoom].forEach(function (socket) {
+      if (socket) {
+        socket.emit('peer.disconnected', { id: id });
+      }
+    });
   });
+
+  // Video Chat Related Handlers
+  // ===========================
+
+  var currentRoom, id;
+
+  socket.on('initRTC', function (data, fn) {
+    currentRoom = (data || {}).room || uuid.v4();
+    var room = rooms[currentRoom];
+    if (!data) {
+      rooms[currentRoom] = [socket];
+      id = userIds[currentRoom] = 0;
+      fn(currentRoom, id);
+      console.log('Room created, with #', currentRoom);
+    } else {
+      if (!room) {
+        return;
+      }
+      userIds[currentRoom] += 1;
+      id = userIds[currentRoom];
+      fn(currentRoom, id);
+      room.forEach(function (s) {
+        s.emit('peer.connected', { id: id });
+      });
+      room[id] = socket;
+      console.log('Peer connected to room', currentRoom, 'with #', id);
+    }
+  });
+
+  socket.on('msg', function (data) {
+    var to = parseInt(data.to, 10);
+    if (rooms[currentRoom] && rooms[currentRoom][to]) {
+      // console.log('Redirecting message to', to, 'by', data.by);
+      rooms[currentRoom][to].emit('msg', data);
+    } else {
+      console.warn('Invalid user');
+    }
+  });
+
 };
