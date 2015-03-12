@@ -24,15 +24,11 @@ html, body {
 }
 
 #videopanel {
-  background-color: black;
+  background-color: #f0f1f3;
 }
 
 #chatpanel {
   height: 88%;
-}
-
-#optionpanel {
-  background-color: #f0f1f3;
 }
 
 .md-tile-content {
@@ -74,16 +70,12 @@ md-item-content .md-tile-content p {
 }
 
 video {
-  width: 100%    !important;
-  height: auto   !important;
+  width: 100%;
 }
 
-.video-wrapper:after {
-  content: ' ';
-  clear: both;
-  display: block;
+md-grid-list {
+  margin: 8px; 
 }
-
 
 /* Utils */
 
