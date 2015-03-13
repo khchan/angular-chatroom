@@ -27,17 +27,13 @@ html, body {
   background-color: #f0f1f3;
 }
 
-#chatpanel {
-  height: 88%;
-}
-
 .md-tile-content {
   padding: 0px;
 }
-
+/*
 md-card {
   background-color: white;
-}
+}*/
 
 md-card.md-default-theme md-card-content {
   display: inline-block;
@@ -75,6 +71,15 @@ video {
 
 md-grid-list {
   margin: 8px; 
+}
+
+@media (max-width: 600px) {
+  #videopanel {
+    /*padding-top: 20px;*/
+  }
+  #chatpanel {
+    max-height: 400px;
+  }
 }
 
 /* Utils */

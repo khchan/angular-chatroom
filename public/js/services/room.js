@@ -1,13 +1,6 @@
 /* global RTCIceCandidate, RTCSessionDescription, RTCPeerConnection, EventEmitter */
 'use strict';
 
-/**
- * @ngdoc service
- * @name publicApp.Room
- * @description
- * # Room
- * Factory in the publicApp.
- */
 app.factory('Room', function ($rootScope, $q, Io, config) {
 
   var iceConfig = { 'iceServers': [{ 'url': 'stun:stun.l.google.com:19302' }]},

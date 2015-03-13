@@ -73,6 +73,8 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
   // Methods published to the scope
   // ==============================
   
+  $scope.error = false;
+
   $scope.keyPress = function(event) {
     if (event.keyCode === 13) { // enter key
       event.preventDefault();
@@ -82,7 +84,7 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
     }
   };
 
-  $scope.toggleLeft = function() {
+  $scope.toggleRight = function() {
     $mdSidenav('right').toggle();
   };
 

@@ -1,13 +1,14 @@
-<md-grid-list
-    md-cols-sm="2" md-cols-md="2" md-cols-gt-md="6"
+<md-grid-list 
+    md-cols-sm="2" md-cols-md="2" md-cols-gt-md="2"
     md-row-height="4:3"
     md-gutter="20px" md-gutter-gt-sm="10px">
   <md-grid-tile ng-repeat="peer in peers"
-                md-rowspan="2"
-                md-colspan="2">
+                md-rowspan-md="2" md-colspan-md="2"
+                md-rowspan-sm="1" md-colspan-sm="1">
     <video-player vid-src="{{peer.stream}}"></video-player>
   </md-grid-tile>
-  <md-grid-tile md-rowspan="2" md-colspan="2">
+  <md-grid-tile md-rowspan-md="2" md-colspan-md="2"
+                md-rowspan-sm="1" md-colspan-sm="1">
     <video ng-src="{{getLocalVideo()}}" autoplay muted></video>
   </md-grid-tile>  
 </md-grid-list>

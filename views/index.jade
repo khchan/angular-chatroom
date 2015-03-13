@@ -2,18 +2,19 @@ extends layout
 
 block body
 
-  div#content(ng-controller='AppCtrl', layout='column', layout-margin, layout-wrap, ng-cloak)
+  div#content(ng-controller='AppCtrl', layout='column', layout-margin, ng-cloak)
 
-    md-toolbar(layout='row')
-      button.menuBtn(ng-click='toggleLeft()', hide-gt-md)
+    md-toolbar(layout='row', hide-sm)
+      button.menuBtn(ng-click='toggleRight()', hide-gt-md)
         span.visuallyhidden
           | Menu
-      h1 angular-chatroom
+      h1 angular-chatroom 
 
-    section(layout='row', layout-sm='column', flex)
-      div#videopanel(flex='50', ng-view)
+    section(layout='row', layout-sm='column', layout-margin)
 
-      md-content.md-padding(flex, scroll-glue)
+      div#videopanel(flex='40', flex-sm='100', ng-if='!error', ng-view)
+
+      md-content#chatpanel.md-padding(flex, scroll-glue)
         md-list
           md-item(ng-repeat='message in messages')
             p(ng-if='message.user === "chatroom"', ng-style='{color: getUserColour(message.user)}')
@@ -32,7 +33,7 @@ block body
               .md-tile-right(ng-if='message.user === name')
                   img(ng-src='img/unnamed.jpg' class='face')
 
-        div(flex, hide-sm)
+        div(flex)
           form(ng-submit='sendMessage()')
             md-input-container
               label

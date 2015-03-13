@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc service
- * @name publicApp.VideoStream
- * @description
- * # VideoStream
- * Factory in the publicApp.
- */
 app.factory('VideoStream', function ($q) {
   var stream;
   return {
@@ -15,14 +8,11 @@ app.factory('VideoStream', function ($q) {
         return $q.when(stream);
       } else {
         var d = $q.defer();
-        navigator.getUserMedia({
-          video: true,
-          audio: true
-        }, function (s) {
-          stream = s;
+        navigator.getUserMedia({video: true, audio: true}, function (data) {
+          stream = data;
           d.resolve(stream);
-        }, function (e) {
-          d.reject(e);
+        }, function (error) {
+          d.reject(error);
         });
         return d.promise;
       }

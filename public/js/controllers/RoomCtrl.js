@@ -1,38 +1,41 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name publicApp.controller:RoomCtrl
- * @description
- * # RoomCtrl
- * Controller of the publicApp
- */
-app.controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room) {
-
-  if (!window.RTCPeerConnection || !navigator.getUserMedia) {
-    $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
-    return;
-  }
+app.controller('RoomCtrl', function ($scope, $sce, VideoStream, $location, $routeParams, $mdToast, Room) {
 
   var stream;
+  $scope.error = false;
+  $scope.peers = [];
+  
+  if (!window.RTCPeerConnection || !navigator.getUserMedia) {
+    $scope.error = true;
+    $mdToast.show($mdToast.simple()
+      .content('WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.')
+      .action('OK')
+      .hideDelay(0)
+      .position('bottom left'));
+    return;
+  }  
 
-  VideoStream.get()
-  .then(function (s) {
-    stream = s;
+  VideoStream.get().then(function(data) {
+    stream = data;
     Room.init(stream);
     stream = URL.createObjectURL(stream);
     if (!$routeParams.roomId) {
-      Room.createRoom()
-      .then(function (roomId) {
+      Room.createRoom().then(function (roomId) {
         $location.path('/room/' + roomId);
       });
     } else {
       Room.joinRoom($routeParams.roomId);
     }
   }, function () {
-    $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
+    $scope.error = true;
+    $mdToast.show($mdToast.simple()
+      .content('No audio/video permissions. Please refresh your browser and allow the audio/video capturing.')
+      .action('OK')
+      .hideDelay(0)
+      .position('bottom left'));
   });
-  $scope.peers = [];
+
   Room.on('peer.stream', function (peer) {
     console.log('Client connected, adding new stream');
     $scope.peers.push({
@@ -40,6 +43,7 @@ app.controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams,
       stream: URL.createObjectURL(peer.stream)
     });
   });
+  
   Room.on('peer.disconnected', function (peer) {
     console.log('Client disconnected, removing stream');
     $scope.peers = $scope.peers.filter(function (p) {
