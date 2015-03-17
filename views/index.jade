@@ -12,7 +12,7 @@ block body
 
     section(layout='row', layout-sm='column', layout-margin)
 
-      div#videopanel(flex='40', flex-sm='100', ng-if='!error', ng-view)
+      div#videopanel(flex='40', flex-sm='100', ng-if="!vidError", ng-view)
 
       md-content#chatpanel.md-padding(flex, scroll-glue)
         md-list

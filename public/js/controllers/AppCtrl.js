@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
+app.controller('AppCtrl', function ($scope, socket, $mdSidenav) {
 
   // Socket listeners
   // ================
@@ -10,7 +10,7 @@ app.controller('AppCtrl', function($scope, socket, $mdSidenav) {
     $scope.name = data.name;
     $scope.users = data.users;
   });
-
+  
   socket.on('send:message', function (message) {
     $scope.messages.push(message);
   });

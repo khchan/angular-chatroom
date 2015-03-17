@@ -1,13 +1,13 @@
 'use strict';
 
-app.controller('RoomCtrl', function ($scope, $sce, VideoStream, $location, $routeParams, $mdToast, Room) {
+app.controller('RoomCtrl', function ($rootScope, $scope, $sce, VideoStream, $location, $routeParams, $mdToast, Room) {
 
   var stream;
   $scope.error = false;
   $scope.peers = [];
   
   if (!window.RTCPeerConnection || !navigator.getUserMedia) {
-    $scope.error = true;
+    $rootScope.vidError = true;
     $mdToast.show($mdToast.simple()
       .content('WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.')
       .action('OK')
@@ -20,6 +20,14 @@ app.controller('RoomCtrl', function ($scope, $sce, VideoStream, $location, $rout
     stream = data;
     Room.init(stream);
     stream = URL.createObjectURL(stream);
+  }, function () {
+    $rootScope.vidError = true;
+    $mdToast.show($mdToast.simple()
+      .content('No audio/video permissions. Please refresh your browser and allow the audio/video capturing.')
+      .action('OK')
+      .hideDelay(0)
+      .position('bottom left'));
+  }).then(function() {
     if (!$routeParams.roomId) {
       Room.createRoom().then(function (roomId) {
         $location.path('/room/' + roomId);
@@ -27,13 +35,6 @@ app.controller('RoomCtrl', function ($scope, $sce, VideoStream, $location, $rout
     } else {
       Room.joinRoom($routeParams.roomId);
     }
-  }, function () {
-    $scope.error = true;
-    $mdToast.show($mdToast.simple()
-      .content('No audio/video permissions. Please refresh your browser and allow the audio/video capturing.')
-      .action('OK')
-      .hideDelay(0)
-      .position('bottom left'));
   });
 
   Room.on('peer.stream', function (peer) {

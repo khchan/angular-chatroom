@@ -30,10 +30,6 @@ html, body {
 .md-tile-content {
   padding: 0px;
 }
-/*
-md-card {
-  background-color: white;
-}*/
 
 md-card.md-default-theme md-card-content {
   display: inline-block;

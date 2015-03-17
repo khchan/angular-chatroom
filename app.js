@@ -5,7 +5,7 @@
 
 var express = require('express'),
   routes = require('./routes'),
-  socket = require('./routes/socket.js');
+  socket = require('./utils/chat.js');
 
 var app = module.exports = express.createServer();
 
@@ -35,7 +35,6 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', routes.index);
-app.get('/partials/:name', routes.partials);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
