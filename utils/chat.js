@@ -1,9 +1,8 @@
 var moniker = require('moniker'),
     randomColor = require('randomcolor'),
     userNames = require('./users'),
-    roomUsers = userNames.roomUsers,
-    rooms = {},
-    users = {};
+    users = userNames.roomUsers,
+    rooms = {};
 
 // export function for listening to the socket
 module.exports = function (socket) {
@@ -28,8 +27,8 @@ module.exports = function (socket) {
     if (userNames.claim(data.name)) {
       var oldName = name;
       userNames.free(oldName, currentRoom);
-
       name = data.name;
+      users[currentRoom][name] = true;
       
       socket.broadcast.to(currentRoom).emit('change:name', {
         oldName: oldName,
@@ -71,16 +70,16 @@ module.exports = function (socket) {
     var room = rooms[currentRoom];
     
     socket.room = currentRoom;
-    if (!roomUsers[currentRoom])
-      roomUsers[currentRoom] = {};
-    roomUsers[currentRoom][name] = true;
+    if (!users[currentRoom])
+      users[currentRoom] = {};
+    users[currentRoom][name] = true;
     socket.join(currentRoom);
     
     // Room not created yet
     if (!data) {
       // create initial list of sockets and names at the hash of currentRoom
       rooms[currentRoom] = [socket];
-      id = users[currentRoom] = 0;
+      id = rooms[currentRoom].users = 0;
       cb(currentRoom, id);
       console.log('Room created, with #', currentRoom);
     } 
@@ -89,8 +88,8 @@ module.exports = function (socket) {
       if (!room) {
         return;
       }
-      users[currentRoom] += 1;
-      id = users[currentRoom];
+      rooms[currentRoom].users += 1;
+      id = rooms[currentRoom].users;
       cb(currentRoom, id);
       // announce to each socket connected to this current room
       room.forEach(function (s) {
@@ -120,5 +119,4 @@ module.exports = function (socket) {
       console.warn('Invalid user');
     }
   });
-
 };

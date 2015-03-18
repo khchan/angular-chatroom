@@ -1,7 +1,7 @@
 /* global RTCIceCandidate, RTCSessionDescription, RTCPeerConnection, EventEmitter */
 'use strict';
 
-app.factory('Room', function ($rootScope, $q, Io, config) {
+app.factory('Room', function ($rootScope, $q, socket, config) {
 
   var iceConfig = { 'iceServers': [{ 'url': 'stun:stun.l.google.com:19302' }]},
       peerConnections = {},
@@ -71,7 +71,7 @@ app.factory('Room', function ($rootScope, $q, Io, config) {
     }
   }
 
-  var socket = Io.connect(config.SIGNALING_SERVER_URL),
+  var socket = socket.io().connect(config.SIGNALING_SERVER_URL),
       connected = false;
 
   function addHandlers(socket) {

@@ -3,7 +3,6 @@
 app.controller('RoomCtrl', function ($rootScope, $scope, $sce, VideoStream, $location, $routeParams, $mdToast, Room) {
 
   var stream;
-  $scope.error = false;
   $scope.peers = [];
   
   if (!window.RTCPeerConnection || !navigator.getUserMedia) {

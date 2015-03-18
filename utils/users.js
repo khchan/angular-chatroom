@@ -39,8 +39,9 @@ var userNames = (function () {
       if (names[name]) {
         delete names[name];
       }
-      if (roomUsers[room][name]) {
-        delete roomUsers[room][name];
+      if (roomUsers[room]) {
+        if (roomUsers[room][name])
+          delete roomUsers[room][name];
       }
     }
   };

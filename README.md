@@ -1,8 +1,10 @@
 # angular-chatroom
 
-A simple instant messaging app to using btford's [angular-socket-io-seed](https://github.com/btford/angular-socket-io-seed).
+A simple webcam/chat messaging application using btford's [angular-socket-io-seed](https://github.com/btford/angular-socket-io-seed)
 
-## Running it
+Live [Demo](http://angular-chatroom.herokuapp.com)
+
+## Installation
 
 First, grab the dependencies with npm and bower:
 
@@ -10,8 +12,6 @@ First, grab the dependencies with npm and bower:
 
     bower install
 
-Then run the app like so:
+Then run the app:
 
     node app.js
-
-And navigate to `localhost:3000`
